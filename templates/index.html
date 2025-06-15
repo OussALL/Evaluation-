@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{url_for('static',filename='images/favicon.png')}}" type="image/png">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="{{url_for('static',filename='images/logo.png')}}" alt="Logo">
+    </div>
+    <div class="profile">
+        <i class="fa-solid fa-user"></i>
+        <p>{{session['student_name']}}</p>
+        <a href="{{url_for('logout')}}">
+                        <button type="submit" id="logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+
+        </a>
+    </div>
+</header>
+<br>
+
+
+<div class="container">
+    <div class="matiere_prof">
+
+        <div class="matiere">
+            <p>{{subject.name}}</p>
+        </div>
+
+        <div class="prof">
+            <form action="{{url_for('student_home')}}" method="post">
+                    <input type="hidden" name="subject_id" value="{{subject.id}}">
+                
+                <label for="teachers">Enseignant :</label>
+                <select id="teachers" name="teacher" required>
+                    <option value="">Choisissez Votre Enseignant</option>
+                    {%for prof in subject.profs%}
+                    <option value="{{prof.id}}">{{prof.fname}} {{prof.lname}}</option>
+                    {%endfor%}
+                </select>
+                <br>
+                <label for="yesRadio">
+                    <input type="radio" id="yesRadio" name="qst" value="yes" onclick="handleRadioClick()"> 
+                    J'ai assisté au cours
+                </label><br>
+                <label for="noRadio">
+                    <input type="radio" id="noRadio" name="qst" value="no" onclick="handleRadioClick()"> 
+                    Je n'ai pas assisté au cours
+                </label><br>
+                
+                <div class="buttons">
+                    <button name="button" id="passer" type="submit" value="skip" disabled>Passer</button>
+                    <button name="button" id="commencer" type="submit" value="start" disabled>Commencer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script defer src="{{url_for('static', filename='js/script.js')}}"></script>
+</body>
+</html>

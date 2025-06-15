@@ -1,0 +1,124 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+header{
+    display: flex;
+    background-color: antiquewhite;
+    align-items: center;
+    justify-content: space-around;
+}
+.logo img{
+    height: 50px;
+}
+.profile{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+.profile p{
+    color: gray;
+}
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    flex-direction: column;
+
+}
+.matiere_prof{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    width: 1000px;
+    box-shadow: 3px 3px 10px rgb(188, 188, 188);
+}
+.options form{
+  margin-top: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.buttons{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.matiere_prof,.prof,.options,.buttons{
+    margin: 5px;
+}
+
+#logout{
+  background: none;
+  border: none;
+}
+
+
+
+
+  .radio-buttons {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .custom-radio input {
+    display: none;
+  }
+
+  .radio-btn {
+    margin: 10px;
+    width:50px;
+    height: 50px;
+    border: 3px solid transparent;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 20px #c3c3c367;
+    cursor: pointer;
+  }
+
+.question{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+  .radio-btn .hobbies-icon {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+  }
+
+  .radio-btn .hobbies-icon i {
+    color: #000000;
+    line-height: 80px;
+    font-size: 60px;
+  }
+
+  .radio-btn .hobbies-icon h3 {
+    color: #29282a;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .custom-radio input:checked + .radio-btn {
+    background-color: #27427956;
+  }
+
+textarea{
+    width: 100%;
+    height: 70px;
+}

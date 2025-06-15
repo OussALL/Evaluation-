@@ -1,0 +1,66 @@
+
+.form-wrapper {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+.form-wrapper h2 {
+    color: #948456;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    color: #555;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.input-group input[type="text"]:focus,
+.input-group input[type="email"]:focus,
+.input-group input[type="password"]:focus {
+    border-color: #948456;
+    outline: none;
+    box-shadow: 0 0 8px rgba(148, 132, 86, 0.3);
+}
+
+.primary-button {
+    background-color: #948456;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.primary-button:hover {
+    background-color: #7d7249;
+}
+
+.form-note {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    margin-top: 15px;
+}

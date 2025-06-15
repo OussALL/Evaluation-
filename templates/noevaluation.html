@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation</title>
+    <link rel="icon" href="{{url_for('static',filename='images/favicon.png')}}" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Sofadi+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&family=Sofadi+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="{{url_for('static',filename='images/logo.png')}}" alt="Logo">
+    </div>
+    <div class="profile">
+        <i class="fa-solid fa-user"></i>
+        <p>{{session['student_name']}}</p>
+        <a href="{{url_for('logout')}}">
+                        <button type="submit" id="logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+
+        </a>
+    </div>
+</header>
+
+<div class="container">
+    <h2>Pas d'Evaluation Pour Votre Classe !</h2>
+    <p class="success">Merci de Ressayer plus tard ou contacter votre administration.</p>
+    </div>
+</div>
+
+<script src="{{url_for('static', filename='js/script.js')}}"></script>
+</body>
+</html>

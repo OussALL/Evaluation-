@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <link rel="stylesheet" href="static/css/modal.css">
+    <link rel="icon" href="static/images/favicon.png" type="image/png">
+    <script src="https://kit.fontawesome.com/5b085c63cb.js" crossorigin="anonymous"></script>
+    <title>Professeurs</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="toggle">
+                <img src="static/images/logo.png">
+
+                <div class="logo">
+                    <h2><span class="danger">   </span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
+                </div>
+            </div>
+
+                    <div class="sidebar">
+                <a href="{{url_for('dashboard')}}" >
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{url_for('students')}}">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Etudiant</h3>
+                </a>
+                <a href="{{url_for('profs')}}" class="active">
+                    <i class="fa-sharp-duotone fa-solid fa-person-chalkboard" style="font-size: 19px;"></i>
+                    <h3>Profs</h3>
+                </a>
+                <a href="{{url_for('subjects')}}">
+                    <span class="material-symbols-outlined">subject</span>
+                    <h3>Matieres</h3>
+                </a>
+                <a href="{{url_for('classes')}}">
+                    <span class="material-symbols-outlined">school</span>
+                    <h3>Classes</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="{{url_for('logout')}}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            <br><br>
+            <h1>Analytiques</h1>
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Professeurs</h3>
+                            <h1>{{profs|length}}</h1>
+              
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="new-users">
+                <h2>Nouveaux Professeurs</h2>
+                <div class="user-list">
+                    {% for prof in profs[:3]%}
+                    <div class="user">
+                        <img src="static/images/profs.png">
+                        
+                        <h2>{{prof.fname}} {{prof.lname}}</h2>
+                        <p>{{prof.immatriculation}}</p>
+                        
+                    </div>
+                    {%endfor%}
+                    <button id="openModalBtn">
+                        <img src="static/images/plus.png">
+                        <h2>Ajouter</h2>
+                        <p>Plus de Profs</p>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="recent-orders">
+                <h2>Liste des Professeurs</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Immatriculation</th>
+                            <th>Matières</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="demandesList">
+                    {% for prof in profs%}
+                        <tr class="hidden">
+                            <th>{{prof.fname}}</th>
+                            <th>{{prof.lname}}</th>
+                            <th>{{prof.immatriculation}}</th>
+                            <th>
+                                {% for subject in prof.subjects%}
+                                - {{subject.name}} -
+                                {%endfor%}
+                            </th>
+                            <th><a href="{{url_for('edit_prof',id=prof.id)}}"><button class="reset">Modifier</button></a></th>
+                            <th><a href="{{url_for('delete_prof',id=prof.id)}}"><button class="reset">Supprimer</button></a></th>
+                        </tr>
+                    {%endfor%}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="button_container">
+                <button id="showMoreBtn">Découvrir Plus</button>
+            </div>
+        </main>
+
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+
+                  <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{session['school_username']}}</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png">
+                    </div>
+                </div>
+            </div>
+
+           <div class="user-profile">
+                <div class="logo">
+                    <h2>{{session['school_name']}}</h2>
+                    <p>Professeurs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            
+            <h3>Ajouter un seul Professeur</h3>
+            <form id="singleStudentForm" method="POST" action="/add_prof">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" required>
+    
+                <label for="prenom">Prénom:</label>
+                <input type="text" id="prenom" name="prenom" required>
+    
+                <label for="immatriculation">Immatriculation:</label>
+                <input type="text" id="immatriculation" name="immatriculation" required>
+
+                <div id="classeTicketsContainer" class="ticket-container"></div>
+                <input type="hidden" id="selectedClasses" name="selectedClasses">
+                <br>
+                <button type="submit" class="btn-primary">Ajouter le Professeur</button>
+            </form>
+    
+            <hr>
+    
+            <!-- <h3>Ajouter plusieurs Professeurs</h3>
+            <form id="multiStudentForm" method="POST" action="#" enctype="multipart/form-data">
+                <label for="file">Fichier:</label>
+                <input type="file" id="file" name="file" required>
+                <p class="small-message">
+                    Instructions pour le fichier Excel :<br>
+                    Le fichier doit contenir les colonnes suivantes :<br>
+                    Nom, Prénom, Immatriculation.
+                </p>
+                <button type="submit" class="btn-primary">Ajouter les Professeurs</button>
+            </form> -->
+        </div>
+    </div>
+
+    <script defer src="static/js/modal.js"></script>
+    <script src="static/js/show_more.js"></script>
+    <script src="static/js/orders.js"></script>
+    <script src="static/js/index.js"></script>
+
+    <script>
+        let selectedClasses = [];
+
+        function addClasseTicket() {
+            const classeSelect = document.getElementById("subjectSelect");
+            const selectedClasse = classeSelect.value;
+
+            if (selectedClasse && !selectedClasses.includes(selectedClasse)) {
+                selectedClasses.push(selectedClasse);
+                updateClasseTickets();
+            }
+
+            classeSelect.value = '';
+        }
+
+        function updateClasseTickets() {
+            const classeTicketsContainer = document.getElementById("classeTicketsContainer");
+            classeTicketsContainer.innerHTML = '';
+
+            selectedClasses.forEach((classe, index) => {
+                const ticket = document.createElement("div");
+                ticket.className = "classe-ticket";
+                ticket.innerHTML = `${classe} <button class="remove-ticket" onclick="removeClasse(${index})">&times;</button>`;
+                classeTicketsContainer.appendChild(ticket);
+            });
+
+            document.getElementById("selectedClasses").value = JSON.stringify(selectedClasses);
+        }
+
+        function removeClasse(index) {
+            selectedClasses.splice(index, 1);
+            updateClasseTickets();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/dashboard.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/modal.css')}}">
+    <script src="https://kit.fontawesome.com/5b085c63cb.js" crossorigin="anonymous"></script>
+    <title>Modifier - Matiére</title>
+    <link rel="icon" href="{{url_for('static',filename='images/favicon.png')}}" type="image/png">
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="toggle">
+                <img src="{{url_for('static',filename='images/logo.png')}}">
+
+                <div class="logo">
+                    <h2><span class="danger">   </span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{{url_for('dashboard')}}" >
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{url_for('students')}}">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Etudiant</h3>
+                </a>
+                <a href="{{url_for('profs')}}">
+                    <i class="fa-sharp-duotone fa-solid fa-person-chalkboard" style="font-size: 19px;"></i>
+                    <h3>Profs</h3>
+                </a>
+                <a href="{{url_for('subjects')}}" class="active">
+                    <span class="material-symbols-outlined">subject</span>
+                    <h3>Matieres</h3>
+                </a>
+                <a href="{{url_for('classes')}}">
+                    <span class="material-symbols-outlined">school</span>
+                    <h3>Classes</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="{{url_for('logout')}}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+            </div>
+        </aside>
+
+        <main style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1>Modifier Les informations du Professeur</h1>
+            <form id="editStudentForm" action="{{url_for('edit_subject',id=subject.id)}}" method="POST">
+                <label for="edit_nom">Nom :</label>
+                <input type="text" id="edit_nom" name="nom" value="{{subject.name}}">
+
+ 
+
+                <label for="classes">Classes :</label>
+                <select id="classeSelect" name="classes" onchange="addClasseTicket()">
+                    {% for classe in classes%}
+                    <option value="{{classe.id}}">{{classe.name}}</option>
+                    {%endfor%}
+                </select>
+                <div id="classeTicketsContainer" class="ticket-container"></div>
+                <input type="hidden" id="selectedClasses" name="selectedClasses">
+
+                    <label for="prof">Professeurs:</label>
+                <select id="profSelect" onchange="addProfTicket()">
+                    <option value="">-- Choisir les professeurs --</option>
+                    {% for prof in profs%}
+                    <option value="{{prof.id}}">{{prof.fname}} {{prof.lname}}</option>
+                    {%endfor%}
+                </select>
+
+                <div id="profTicketsContainer" class="ticket-container"></div>
+                <input type="hidden" id="selectedProfs" name="selectedProfs">
+
+
+                <br><br>
+                <button type="submit" class="btn-primary">Enregistrer</button>
+            </form>
+        </main>
+
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+            <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{session['school_username']}}</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png">
+                    </div>
+                </div>
+            </div>
+
+           <div class="user-profile">
+                <div class="logo">
+                    <h2>{{session['school_name']}}</h2>
+                    <p>Modifier Une Matiere</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const selectedClasses = {{ selected_classes | tojson | safe }};
+    const selectedProfs = {{ selected_profs | tojson | safe }};
+
+    window.onload = function () {
+        updateClasseTickets();
+        updateProfTickets();
+    };
+
+    function addClasseTicket() {
+        const select = document.getElementById("classeSelect");
+        const selectedId = parseInt(select.value);
+        const selectedText = select.options[select.selectedIndex].text;
+
+        if (selectedId && !selectedClasses.some(cl => cl.id === selectedId)) {
+            selectedClasses.push({ id: selectedId, name: selectedText });
+            updateClasseTickets();
+        }
+        select.value = '';
+    }
+
+    function addProfTicket() {
+        const select = document.getElementById("profSelect");
+        const selectedId = parseInt(select.value);
+        const selectedText = select.options[select.selectedIndex].text;
+
+        if (selectedId && !selectedProfs.some(p => p.id === selectedId)) {
+            selectedProfs.push({ id: selectedId, name: selectedText });
+            updateProfTickets();
+        }
+        select.value = '';
+    }
+
+    function updateClasseTickets() {
+        const container = document.getElementById("classeTicketsContainer");
+        container.innerHTML = '';
+        selectedClasses.forEach((cl, index) => {
+            const ticket = document.createElement("div");
+            ticket.className = "classe-ticket";
+            ticket.innerHTML = `
+                ${cl.name}
+                <button onclick="removeClasse(${index})" class="remove-ticket">&times;</button>
+            `;
+            container.appendChild(ticket);
+        });
+        document.getElementById("selectedClasses").value = JSON.stringify(selectedClasses.map(c => c.id));
+    }
+
+    function removeClasse(index) {
+        selectedClasses.splice(index, 1);
+        updateClasseTickets();
+    }
+
+    function updateProfTickets() {
+        const container = document.getElementById("profTicketsContainer");
+        container.innerHTML = '';
+        selectedProfs.forEach((p, index) => {
+            const fullName = p.name || (p.fname && p.lname ? `${p.fname} ${p.lname}` : 'Prof inconnu');
+            const ticket = document.createElement("div");
+            ticket.className = "prof-ticket";
+            ticket.innerHTML = `
+                ${fullName}
+                <button onclick="removeProf(${index})" class="remove-ticket">&times;</button>
+            `;
+            container.appendChild(ticket);
+        });
+        document.getElementById("selectedProfs").value = JSON.stringify(selectedProfs.map(p => p.id));
+    }
+
+    function removeProf(index) {
+        selectedProfs.splice(index, 1);
+        updateProfTickets();
+    }
+</script>
+
+
+    <script defer src="{{url_for('static',filename='js/edit_info_modal.js')}}"></script>
+    <script defer src="{{url_for('static',filename='js/modal.js')}}"></script>
+    <script src="{{url_for('static',filename='js/show_more.js')}}"></script>
+    <script src="{{url_for('static',filename='js/orders.js')}}"></script>
+    <script src="{{url_for('static',filename='js/index.js')}}"></script>
+</body>
+
+</html>

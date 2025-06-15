@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <script src="https://kit.fontawesome.com/5b085c63cb.js" crossorigin="anonymous"></script>
+    <title>Classes</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
+</head>
+
+<body>
+    <div class="container">
+        <aside>
+            <div class="toggle">
+                <img src="{{ url_for('static', filename='images/logo.png') }}">
+                <div class="logo">
+                     <h2><span class="danger">   </span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{{url_for('dashboard')}}" >
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{url_for('students')}}">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Etudiant</h3>
+                </a>
+                <a href="{{url_for('profs')}}">
+                    <i class="fa-sharp-duotone fa-solid fa-person-chalkboard" style="font-size: 19px;"></i>
+                    <h3>Profs</h3>
+                </a>
+                <a href="{{url_for('subjects')}}">
+                    <span class="material-symbols-outlined">subject</span>
+                    <h3>Matieres</h3>
+                </a>
+                <a href="{{url_for('classes')}}" class="active">
+                    <span class="material-symbols-outlined">school</span>
+                    <h3>Classes</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="{{url_for('logout')}}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            
+
+
+            <div class="recent-orders">
+                <h2>Liste des Matiéres</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Participants à l’évaluation</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="demandesList">
+                    {% for subject in classe.subjects%}
+                        <tr>
+                            <th>{{subject.name}}</th>
+                            <th>{{qt.query.filter_by(subject_id=subject.id,classe_id=classe.id).count()}}</th>
+                            {% if (qt.query.filter_by(subject_id=subject.id,classe_id=classe.id).count())>0 %}
+                            <th><a href="{{url_for('rapport_details',classe_id=classe.id,subject_id=subject.id)}}"><button class="reset">Rapport</button></a></th>
+                            {%else%}
+                            <th><button class="reset">Rapport Indisponible</button></th>
+
+                            {%endif%}
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+              <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{session['school_username']}}</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="logo">
+                    <h2>{{session['school_name']}}</h2>
+                    <p>Tableau De Bord</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/show_more.js"></script>
+    <script src="static/js/orders.js"></script>
+    <script src="static/js/index.js"></script>
+</body>
+
+</html>

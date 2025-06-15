@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <link rel="stylesheet" href="static/css/modal.css">
+    <script src="https://kit.fontawesome.com/5b085c63cb.js" crossorigin="anonymous"></script>
+    <title>Etudiants</title>
+    <link rel="icon" href="static/images/favicon.png" type="image/png">
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="toggle">
+                <img src="static/images/logo.png">
+                <div class="logo">
+                    <h2><span class="danger">   </span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{{url_for('dashboard')}}" >
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{url_for('students')}}" class="active">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Etudiant</h3>
+                </a>
+                <a href="{{url_for('profs')}}">
+                    <i class="fa-sharp-duotone fa-solid fa-person-chalkboard" style="font-size: 19px;"></i>
+                    <h3>Profs</h3>
+                </a>
+                <a href="{{url_for('subjects')}}">
+                    <span class="material-symbols-outlined">subject</span>
+                    <h3>Matieres</h3>
+                </a>
+                <a href="{{url_for('classes')}}">
+                    <span class="material-symbols-outlined">school</span>
+                    <h3>Classes</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="{{url_for('logout')}}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            <br><br>
+            <h1>Analytiques</h1>
+            <div class="analyse">
+                <div class="visits">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Etudiants</h3>
+                            <h1>{{students|length}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="new-users">
+                <h2>Nouveaux Etudiants</h2>
+                <div class="user-list">
+                    {% for student in students[:3] %}
+                    <div class="user">
+                        <img src="static/images/student.png">
+                        <p>{{student.fname}} {{student.lname}}</p>
+                        <p>{{student.user.username}}</p>
+                    </div>
+                    {%endfor%}
+                    <button id="openModalBtn">
+                        <img src="static/images/plus.png">
+                        <h2>Ajouter</h2>
+                        <p>Plus d'Etudiants</p>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="recent-orders">
+                <h2>Liste des Etudiants</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Classe</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="demandesList">
+                        {% for student in students %}
+                        <tr class="hidden">
+                            <th>{{student.fname}}</th>
+                            <th>{{student.lname}}</th>
+                            <th>{{student.user.email}}</th>
+                            <th>{{student.user.username}}</th>
+                            <th>{{student.classes.name}}</th>
+                            <th>
+                                 <a href="{{url_for('reset_password',id=student.id)}}"><button type="submit" class="reset">Renitialiser Mot de passe</button></a>
+                            </th>
+                            <th>
+                                <a href="{{url_for('edit_student',id=student.id)}}"><button type="submit" class="reset">Modifier</button></a>
+                            </th>
+                            <th>
+                                <a href="{{url_for('delete_student',id=student.id)}}"><button type="submit" class="reset">Supprimer</button></a>
+                            </th>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+            <div class="button_container">
+                <button id="showMoreBtn">Découvrir Plus</button>
+            </div>
+        </main>
+
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+
+            <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{session['school_username']}}</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png">
+                    </div>
+                </div>
+            </div>
+
+             <div class="user-profile">
+                <div class="logo">
+                    <h2>{{session['school_name']}}</h2>
+                    <p>Etudiants</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            
+            <h3>Ajouter un seul étudiant</h3>
+            <form id="singleStudentForm" action="/add_student" method="POST">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" required>
+
+                <label for="prenom">Prénom:</label>
+                <input type="text" id="prenom" name="prenom" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="classe">Classe:</label>
+                <br>
+                <select name="classe" id="" required>
+                    {% for classe in classes %}
+                        <option value="{{classe.name}}">{{classe.name}}</option>
+                    {%endfor%}
+                </select>
+                <br><br>
+
+                <button type="submit" class="btn-primary">Ajouter l'étudiant</button>
+                <br><br>
+            </form>
+
+            <hr>
+
+            <!-- <h3>Ajouter plusieurs étudiants</h3>
+            <form id="multiStudentForm" enctype="multipart/form-data" action="/upload_students" method="POST">
+                <label for="file">Fichier:</label>
+                <input type="file" id="file" name="file" required>
+                <p class="small-message">Instructions pour le fichier Excel :
+                    <br>Le fichier Excel que vous téléchargez doit contenir les colonnes suivantes :
+                    <br>Nom : Le nom de l'Etudiant.
+                    <br>Prenom : Le prenom de l'Etudiant.
+                    <br>Email : L'Email de l'Etudiant.
+                    <br>Classe : La Classe de l'Etudiant.
+                    <br><br>
+                <button type="submit" class="btn-primary">Ajouter les étudiants</button>
+            </form> -->
+        </div>
+    </div>
+
+    <script defer src="static/js/modal.js"></script>
+    <script src="static/js/show_more.js"></script>
+    <script src="static/js/orders.js"></script>
+    <script src="static/js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <title>Page de connexion</title>
+    <link rel="icon" href="{{url_for('static',filename='images/favicon.png')}}" type="image/png">
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <script>
+                alert("{{ message }}");
+            </script> 
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form action="{{url_for('signup')}}" method="POST" >
+                <h1>Créer un compte</h1>
+                <input type="text" name="name" placeholder="Entrez le Nom de votre organisation" required>
+                <input type="text" name="abbr" placeholder="Entrez l'abréviation de votre organisation" required>
+                <input type="text" name="email" placeholder="Entrez votre Email" required>
+                <input type="text" name="username" placeholder="Entrez votre username" required>
+                <input type="password" name="password" placeholder="Entrez votre mot de passe" required >
+
+
+                <button type="submit">S'inscrire</button>
+                <a href="#">Cliquez ici si vous avez déja un compte d'organisation</a>
+                
+            </form>
+            
+        </div>
+        <div class="form-container sign-in">
+            <form method="POST" action="/login">
+                <h1>Se Connecter</h1>
+                <div class="social-icons">
+
+                    <a href="" class="icon"><i class="fa-solid fa-user-lock"></i></a>
+                    <a href="" class="icon"><i class="fa-solid fa-gear"></i></a>
+
+                </div>
+                <span>Entrez Votre nom d'utilisateur et mot de passe</span>
+                <input type="text" name="username" placeholder="Entrez Votre Nom d'utilisateur" required>
+                <input type="password" name="password" placeholder="Entrez Votre Mot de passe" required>
+                <button type="submit">Se Connecter</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Content de te revoir !</h1>
+                    <p>Entrez vos informations personnelles pour utiliser toutes les fonctionnalités du site</p>
+                    <button class="hidden" id="login">Se Connecter</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Salam !</h1>
+                    <p>
+                        Si vous souhaitez créer une évaluation pour vos professeurs, nous vous invitons à créer un compte . Inscrivez-vous avec vos informations  pour utiliser toutes les fonctionnalités du site
+                    </p>
+                    <button class="hidden" id="register">Créer un compte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static',filename='js/login.js')}}"></script>
+</body>
+
+</html>

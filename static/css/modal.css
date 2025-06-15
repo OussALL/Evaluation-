@@ -1,0 +1,86 @@
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border: 15px solid #948456;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  h3 {
+    color: #948456;
+    text-align: center;
+  }
+  
+  label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ccc; 
+    border-radius: 5px;
+  }
+  
+  .btn-primary {
+    background-color: #948456;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover {
+    background-color: #7b6e48;
+  }
+  
+  .small-message {
+    font-size: 12px;
+    color: gray;
+    margin-top: -5px;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    cursor: pointer;
+  }
+  #openModalBtn{
+    background: none;
+    cursor: pointer;
+  }
+  select{
+    padding: 10px;
+    width: 100%;
+    border: rgba(128, 128, 128, 0.293) solid 0.5px;
+    border-radius: 5px;
+    margin-bottom: 7px;
+  }
+
