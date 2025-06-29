@@ -1,5 +1,5 @@
 from flask import Blueprint,request,redirect,url_for,render_template,session,flash
-from models.models import Users,Schools,Student_Eval,Students,Classes
+from models.models import Users,Schools,Student_Eval,Students,Classes,db
 from utils.send_mail import send_mail
 from extensions import mail 
 students_bp=Blueprint('students',__name__)

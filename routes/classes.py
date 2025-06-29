@@ -1,5 +1,5 @@
 from flask import Flask,Blueprint,request,redirect,url_for,render_template,session,flash
-from models.models import Users,Schools,Student_Eval,Classes,Subjects,Profs,QuestionsTrack
+from models.models import Users,Schools,Student_Eval,Classes,Subjects,Profs,QuestionsTrack,db
 from utils.graphs import make_graph 
 from sqlalchemy import func
 

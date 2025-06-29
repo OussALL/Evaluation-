@@ -1,5 +1,5 @@
 from flask import Blueprint,request,redirect,url_for,render_template,session,flash
-from models.models import Users,Schools,Classes,Subjects,Profs
+from models.models import Users,Schools,Classes,Subjects,Profs,db
 from sqlalchemy import func
 
 subjects_bp=Blueprint('subjects',__name__)
