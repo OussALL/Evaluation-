@@ -1,14 +1,14 @@
-from flask import Flask,Blueprint,request,redirect,url_for,render_template,session
+from flask import Flask,Blueprint,request,redirect,url_for,render_template,session,flash
 from models.models import *
 profs_bp=Blueprint('profs',__name__)
 
 @profs_bp.route("/profs")
 def profs():
     if 'school_username' and 'school_name' in session:
-        profs=Profs.query.join(Profs.schools).filter(Schools.name==session['school_name']).all()
+        profs=Profs.query.join(Profs.schools).join(Schools.user).filter(Users.username==session['school_username']).all()
         return render_template("profs.html",profs=profs)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("home.home"))
 
 @profs_bp.route("/edit_prof/<int:id>",methods=['POST','GET'])
 def edit_prof(id):
@@ -22,12 +22,14 @@ def edit_prof(id):
                         prof.fname=fname
                         prof.lname=lname
                         db.session.commit()
-                        return redirect(url_for('profs'))
+                        flash("Prof updated successfully.", "success")
+                        return redirect(url_for('profs.profs'))
                 else:
                         return render_template("edit_prof.html",prof=prof)
             else:
                 return render_template("error_page.html")
-
+        else:
+            return redirect(url_for("home.home")) 
 
 @profs_bp.route('/delete_prof/<int:id>')
 def delete_prof(id):
@@ -37,11 +39,12 @@ def delete_prof(id):
         if prof in school.profs:
             Profs.query.filter_by(id=id).delete()
             db.session.commit()
-            return redirect(url_for('profs'))
+            flash("Prof deleted successfully.", "success")
+            return redirect(url_for('profs.profs'))
         else:
             return render_template("error_page.html")
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("home.home"))
     
 @profs_bp.route('/add_prof',methods=['POST','GET'])
 def add_prof():
@@ -50,16 +53,16 @@ def add_prof():
             lname=request.form.get("nom").strip()
             fname=request.form.get("prenom").strip()
             immatriculation=request.form.get("immatriculation").strip()
-            already_exist=Profs.query.join(Profs.schools).filter(Schools.name==session['school_name'],Profs.immatriculation==immatriculation).first()
+            already_exist=Profs.query.join(Profs.schools).join(Schools.user).filter(Users.username==session['school_username'],Profs.immatriculation==immatriculation).first()
             if already_exist:
-                return "already exist"
+                flash("Prof / immaatriculation already exist.", "failed")
+                return redirect(url_for('profs.profs'))
             new_prof=Profs(fname=fname,lname=lname,immatriculation=immatriculation)
             db.session.add(new_prof)
             school=Schools.query.join(Schools.user).filter(and_(Users.username==session["school_username"],Schools.name==session['school_name'])).first()
             school.profs.append(new_prof)
             db.session.commit()
-            return redirect(url_for('profs'))
-        else:
-            return redirect(url_for('profs'))
+            flash("Prof added successfully.", "success")
+        return redirect(url_for('profs.profs'))
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("home.home"))

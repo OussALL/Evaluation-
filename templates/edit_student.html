@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{url_for('static',filename='css/dashboard.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/modal.css')}}">
     <script src="https://kit.fontawesome.com/5b085c63cb.js" crossorigin="anonymous"></script>
-    <title>Etudiants</title>
+    <title>Evaluation</title>
     <link rel="icon" href="{{url_for('static',filename='images/favicon.png')}}" type="image/png">
     
 </head>
@@ -17,43 +17,43 @@
 <body>
 
     <div class="container">
-        <aside>
+         <aside>
             <div class="toggle">
                 <img src="{{url_for('static',filename='images/logo.png')}}">
                 <div class="logo">
-                    <h2><span class="danger">   </span></h2>
+                     <h2><span class="danger">   </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">close</span>
                 </div>
             </div>
 
-                  <div class="sidebar">
-                <a href="{{url_for('dashboard')}}" >
+            <div class="sidebar">
+                <a href="{{url_for('dashboard.dashboard')}}" >
                     <span class="material-icons-sharp">dashboard</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="{{url_for('students')}}" class="active">
+                <a href="{{url_for('students.students')}}" class="active">
                     <span class="material-icons-sharp">person_outline</span>
                     <h3>Etudiant</h3>
                 </a>
-                <a href="{{url_for('profs')}}">
+                <a href="{{url_for('profs.profs')}}">
                     <i class="fa-sharp-duotone fa-solid fa-person-chalkboard" style="font-size: 19px;"></i>
                     <h3>Profs</h3>
                 </a>
-                <a href="{{url_for('subjects')}}">
+                <a href="{{url_for('subjects.subjects')}}">
                     <span class="material-symbols-outlined">subject</span>
                     <h3>Matieres</h3>
                 </a>
-                <a href="{{url_for('classes')}}">
+                <a href="{{url_for('classes.classes')}}">
                     <span class="material-symbols-outlined">school</span>
                     <h3>Classes</h3>
                 </a>
-                <a href="#">
+                <a href="{{url_for('auth.settings')}}">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Settings</h3>
                 </a>
-                <a href="{{url_for('logout')}}">
+                <a href="{{url_for('auth.logout')}}">
                     <span class="material-icons-sharp">logout</span>
                     <h3>Logout</h3>
                 </a>
@@ -62,7 +62,7 @@
 
         <main style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <h1>Modifier l'Étudiant</h1>
-            <form id="editStudentForm" action="{{url_for('edit_student',id=student.id)}}" method="POST">
+            <form id="editStudentForm" action="{{url_for('students.edit_student',id=student.id)}}" method="POST">
                 <label for="edit_username">Username :</label>
                 <input type="text" id="edit_username" name="username_show" value="{{student.user.username}}" disabled>
                 <input type="text" name="username" value="{{student.id}}" hidden>

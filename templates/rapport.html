@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapport d'Évaluation</title>
+    <title>Evaluation</title>
     <style>
         :root {
             --color-primary: rgb(145, 135, 123);
@@ -55,8 +55,8 @@
 
         .charts-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
         }
 
         .chart-box {
@@ -117,14 +117,14 @@
     <div class="recent-orders">
         <h2>Rapport d'Évaluation</h2>
         <div class="infos">
-            Matière : <strong>{{ subject.name }}</strong> | Classe : <strong>{{ classe.name }}</strong>
+            Matière : <strong>{{ subject.name }}</strong> | Classe : <strong>{{ classe.name }}</strong> | Prof : <strong>{{ prof.lname }} {{ prof.fname }}</strong>
         </div>
 
         <div class="charts-container">
             {% for i in range(1, 5) %}
             <div class="chart-box">
                 <h3>Question Q{{ i }}</h3>
-                <img src="{{ url_for('static', filename='graphs/q' ~ i ~ '_' ~ subject_id ~ '_' ~ classe_id ~ '.png') }}" alt="Graphique Q{{ i }}">
+                <img src="{{ url_for('static', filename='graphs/q' ~ i ~ '_' ~ subject.id ~ '_' ~ classe.id ~ '.png') }}" alt="Graphique Q{{ i }}">
             </div>
             {% endfor %}
         </div>

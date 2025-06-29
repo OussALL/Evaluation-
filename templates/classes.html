@@ -7,50 +7,55 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notifications.css') }}">
     <script src="https://kit.fontawesome.com/5b085c63cb.js" crossorigin="anonymous"></script>
-    <title>Classes</title>
+    <title>Evaluation</title>
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
 </head>
 
 <body>
+{% include 'notifications.html' %}
+
+
+
     <div class="container">
-        <aside>
+         <aside>
             <div class="toggle">
-                <img src="{{ url_for('static', filename='images/logo.png') }}">
+                <img src="{{url_for('static',filename='images/logo.png')}}">
                 <div class="logo">
-                    <h2><span class="danger"></span></h2>
+                     <h2><span class="danger">   </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">close</span>
                 </div>
             </div>
 
-                        <div class="sidebar">
-                <a href="{{url_for('dashboard')}}" >
+            <div class="sidebar">
+                <a href="{{url_for('dashboard.dashboard')}}" >
                     <span class="material-icons-sharp">dashboard</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="{{url_for('students')}}">
+                <a href="{{url_for('students.students')}}">
                     <span class="material-icons-sharp">person_outline</span>
                     <h3>Etudiant</h3>
                 </a>
-                <a href="{{url_for('profs')}}">
+                <a href="{{url_for('profs.profs')}}">
                     <i class="fa-sharp-duotone fa-solid fa-person-chalkboard" style="font-size: 19px;"></i>
                     <h3>Profs</h3>
                 </a>
-                <a href="{{url_for('subjects')}}">
+                <a href="{{url_for('subjects.subjects')}}">
                     <span class="material-symbols-outlined">subject</span>
                     <h3>Matieres</h3>
                 </a>
-                <a href="{{url_for('classes')}}" class="active">
+                <a href="{{url_for('classes.classes')}}" class="active">
                     <span class="material-symbols-outlined">school</span>
                     <h3>Classes</h3>
                 </a>
-                <a href="#">
+                <a href="{{url_for('auth.settings')}}">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Settings</h3>
                 </a>
-                <a href="{{url_for('logout')}}">
+                <a href="{{url_for('auth.logout')}}">
                     <span class="material-icons-sharp">logout</span>
                     <h3>Logout</h3>
                 </a>
@@ -104,9 +109,9 @@
                         <tr>
                             <th>{{classe.name}}</th>
                             <th>{{classe.students|length}}</th>
-                            <th><a href="{{url_for('edit_classe',id=classe.id)}}"><button class="reset">Modifier</button></a></th>
-                            <th><a href="{{url_for('delete_classe',id=classe.id)}}"><button class="reset">Supprimer</button></a></th>
-                            <th><a href="{{url_for('start_eval',id=classe.id)}}"><button class="reset">
+                            <th><a href="{{url_for('classes.edit_classe',id=classe.id)}}"><button class="reset">Modifier</button></a></th>
+                            <th><a href="{{url_for('classes.delete_classe',id=classe.id)}}"><button class="reset">Supprimer</button></a></th>
+                            <th><a href="{{url_for('classes.start_eval',id=classe.id)}}"><button class="reset">
                                 {%if classe.eval == 0 %}
                                 Commencer Evaluation
                                 {%else%}
@@ -114,7 +119,7 @@
                                 {%endif%}
                             
                             </button></a></th>
-                            <th><a href="{{url_for('rapport',id=classe.id)}}"><button class="reset">Rapport</button></a></th>
+                            <th><a href="{{url_for('classes.rapport',id=classe.id)}}"><button class="reset">Rapport</button></a></th>
 
                         </tr>
                         {%endfor%}
@@ -150,7 +155,7 @@
             <div class="user-profile">
                 <div class="logo">
                     <h2>{{session['school_name']}}</h2>
-                    <p>Tableau De Bord</p>
+                    <p>Classes</p>
                 </div>
             </div>
         </div>
@@ -160,7 +165,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Ajouter une seule Classe</h3>
-            <form id="singleStudentForm" action="{{url_for('add_classe')}}" method="post">
+            <form id="singleStudentForm" action="{{url_for('classes.add_classe')}}" method="post">
                 <label for="nom">Nom:</label>
                 <input type="text" id="nom" name="nom" required>
 
@@ -173,6 +178,7 @@
         </div>
     </div>
 
+    <script defer src="{{ url_for('static', filename='js/notifications.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/modal.js') }}"></script>
     <script src="{{ url_for('static', filename='js/show_more.js') }}"></script>
     <script src="{{ url_for('static', filename='js/orders.js') }}"></script>

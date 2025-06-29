@@ -1,7 +1,9 @@
 import matplotlib
 matplotlib.use('Agg')  
 import matplotlib.pyplot as plt
+import os
 
+basedir = os.path.abspath(os.path.dirname(__file__))
 def make_graph(valeurs, qst_number, subject_id, classe_id):
     sections = [
         "Très insatisfaisant",
@@ -25,5 +27,6 @@ def make_graph(valeurs, qst_number, subject_id, classe_id):
     plt.title(f"Répartition des réponses à la question Q{qst_number}", fontsize=14)
     plt.axis('equal')  
     plt.tight_layout()
-    plt.savefig(f".venv/static/graphs/q{qst_number}_{subject_id}_{classe_id}.png")
+    plt.savefig(os.path.join(basedir, '..', 'static', 'graphs', f"q{qst_number}_{subject_id}_{classe_id}.png"))
+
     plt.close()  

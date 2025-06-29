@@ -1,0 +1,115 @@
+#settings-container {
+    width: 90%;
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    font-family: 'Helvetica', Arial, sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-size: 28px;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 4px;
+}
+
+.settings-underline {
+    width: 80px;
+    height: 3px;
+    background-color: var(--color-primary);
+    margin: 0 auto 30px auto;
+    border-radius: 2px;
+}
+
+/* Cards for sections */
+.admin-info, .password-change {
+    background-color: var(--color-background);
+    padding: 25px;
+    border-radius: var(--border-radius-2);
+    margin-bottom: 30px;
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+}
+
+.big-title {
+    font-size: 22px;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 10px;
+}
+
+.champ {
+    font-size: 16px;
+    margin: 8px 0;
+    color: var(--color-dark);
+}
+
+.form-field {
+    margin-bottom: 20px;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 15px;
+    border: none;
+    border-bottom: 2px solid var(--color-primary);
+    background-color: transparent;
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+input[type="password"]:focus {
+    border-color: var(--color-dark);
+    outline: none;
+}
+
+::placeholder {
+    color: var(--color-dark-variant);
+    opacity: 0.7;
+}
+
+.form-submit {
+    text-align: center;
+}
+
+.form-submit input {
+    padding: 12px 35px;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: var(--border-radius-1);
+}
+
+.form-submit input:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+@media (max-width: 768px) {
+    #settings-container {
+        padding: 20px;
+    }
+
+    .big-title {
+        font-size: 20px;
+    }
+
+    input[type="password"] {
+        font-size: 14px;
+    }
+
+    .form-submit input {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+}

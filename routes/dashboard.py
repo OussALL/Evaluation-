@@ -9,8 +9,7 @@ def dashboard():
         classes=Classes.query.join(Classes.schools).filter(Schools.name==session['school_name']).all()
         profs=Profs.query.join(Profs.schools).filter(Schools.name==session['school_name']).all()
         subjects=Subjects.query.join(Subjects.classes).join(Classes.schools).filter(Schools.name==session['school_name']).all()
-
         return render_template("dashboard.html",students=students,classes=classes,profs=profs,subjects=subjects)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("home.home"))
     

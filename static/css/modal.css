@@ -1,4 +1,7 @@
-
+  #openModalBtn{
+    background: none;
+    cursor: pointer;
+  }
 .modal {
     display: none; 
     position: fixed; 
@@ -72,10 +75,7 @@
     color: black;
     cursor: pointer;
   }
-  #openModalBtn{
-    background: none;
-    cursor: pointer;
-  }
+
   select{
     padding: 10px;
     width: 100%;
