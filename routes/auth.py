@@ -1,5 +1,5 @@
 from flask import Flask,Blueprint,request,redirect,url_for,render_template,session,flash
-from models.models import *
+from models.models import Users,Schools
 auth_bp=Blueprint('auth',__name__)
 
 

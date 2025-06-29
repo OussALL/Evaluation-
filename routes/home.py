@@ -1,5 +1,4 @@
-from flask import Flask,Blueprint,request,redirect,url_for,render_template,session
-from models.models import *
+from flask import Blueprint,redirect,url_for,render_template,session
 home_bp=Blueprint('home',__name__)
 
 @home_bp.route('/')

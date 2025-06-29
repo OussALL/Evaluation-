@@ -1,5 +1,5 @@
-from flask import Flask,Blueprint,request,redirect,url_for,render_template,session
-from models.models import *
+from flask import Blueprint,redirect,url_for,render_template,session
+from models.models import Schools,Students,Classes,Subjects,Profs
 dashboard_bp=Blueprint('dashboard',__name__)
 
 @dashboard_bp.route('/dashboard')

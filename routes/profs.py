@@ -1,5 +1,5 @@
-from flask import Flask,Blueprint,request,redirect,url_for,render_template,session,flash
-from models.models import *
+from flask import Blueprint,request,redirect,url_for,render_template,session,flash
+from models.models import Users,Schools,Profs
 profs_bp=Blueprint('profs',__name__)
 
 @profs_bp.route("/profs")
