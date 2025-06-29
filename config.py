@@ -8,8 +8,8 @@ class Config:
     secret_key='eval_project'
     MAIL_SERVER="smtp.gmail.com"
     MAIL_PORT=465
-    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
-    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    MAIL_USERNAME="contact.qanitate@gmail.com"
+    MAIL_PASSWORD="wvgi olai ovkm dmrg"
     MAIL_USE_TLS=False
     MAIL_USE_SSL=True
     
