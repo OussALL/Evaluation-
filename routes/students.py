@@ -96,7 +96,7 @@ def add_student():
             email=request.form.get("email").strip()
             student_exist=Students.query.join(Students.user).filter(Users.email==email).first()
             if student_exist:
-                flash("Student already exist.", "failed")
+                flash("Student already exists. Please try again with a different email.", "failed")
                 return redirect(url_for('students.students'))
             if request.form.get("classe"):
                 classe=request.form.get("classe").strip()
